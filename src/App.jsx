@@ -1,5 +1,5 @@
 import './App.css'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, createHashRouter, RouterProvider } from 'react-router-dom'
 import Layout from './Components/Layout'
 import Home from './Components/Home'
 import { Provider, useDispatch } from 'react-redux'
@@ -7,7 +7,7 @@ import { store } from './Redux/Store'
 import { Toaster } from 'react-hot-toast'
 
 function App() {
-  const routes = createBrowserRouter([{
+  const routes = createHashRouter([{
     path: "",
     element: <Layout />,
     children:[
