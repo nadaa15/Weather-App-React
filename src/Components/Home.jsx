@@ -5,7 +5,7 @@ import CityCard from './CityCard'
 import WeatherDetails from './WeatherDetails';
 import DaysForcast from './DaysForcast';
 import HoursForcast from './HoursForcast';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getWeatherByLocation } from "../Redux/WeatherSlice";
 
 export default function Home() {

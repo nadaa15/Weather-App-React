@@ -108,8 +108,8 @@ export default function WeatherDetails() {
                   style={{ width: "100%", height: "100%" }}
                 />
               </Box>
-              <Typography variant="h4" color="text.primary">
-                {weather?.current?.condition?.text.split(" ")[0]}
+              <Typography variant="h5" color="text.primary">
+                {weather?.current?.condition?.text}
               </Typography>
             </Stack>
           </Grid>

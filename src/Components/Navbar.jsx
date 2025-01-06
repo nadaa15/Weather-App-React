@@ -6,8 +6,9 @@ import Toolbar from "@mui/material/Toolbar";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch, useSelector } from "react-redux";
-import { getWeatherBySearch } from "../Redux/WeatherSlice";
+import { getWeatherByLocation, getWeatherBySearch } from "../Redux/WeatherSlice";
 import toast from "react-hot-toast";
+import { Typography } from "@mui/material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -54,10 +55,12 @@ export default function Navbar() {
   const dispatch = useDispatch()
         const { error } = useSelector((state) => state.weather);
   const [searchValue, setsearchValue] =useState("")
+  const [cityError, setcityError] =useState(false)
 
 
 
- function handleSearch(term) {
+  function handleSearch(term) {
+   setcityError(false)
    setsearchValue(term.trim());
    dispatch(getWeatherBySearch(term));
  }
@@ -65,10 +68,15 @@ export default function Navbar() {
   useEffect(() => {
     if (error) {
       if (error === "Parameter q is missing.") {
-        dispatch(getWeatherBySearch("Cairo"));
+        setcityError(false)
+               navigator.geolocation.getCurrentPosition((position) => {
+                 const { latitude, longitude } = position.coords;
+                 dispatch(getWeatherByLocation({ latitude, longitude }));
+               });
       } else if (error === "No matching location found.") {
-        toast.error("No matching location found. Please try again.");
+        setcityError(true)
       } else {
+        setcityError(false)
         toast.error("An unexpected error occurred.");
       }
     }
@@ -79,12 +87,12 @@ export default function Navbar() {
   
 
   return (
-    <Box sx={{mb:"40px"}}>
+    <Box sx={{ mb: "40px" }}>
       <AppBar
         position="static"
-        sx={{ bgcolor: "transparent", boxShadow: "none",pt:2 }}
+        sx={{ bgcolor: "transparent", boxShadow: "none", pt: 2 }}
       >
-        <Toolbar>
+        <Toolbar sx={{display:"flex", flexDirection:"column", gap:2}}>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -98,6 +106,12 @@ export default function Navbar() {
               }}
             />
           </Search>
+          {cityError?<Typography
+            sx={{ color: "#b00", fontWeight: "600" }}
+          >
+            No matching location found. Please try again.
+          </Typography>:null}
+          
         </Toolbar>
       </AppBar>
     </Box>
