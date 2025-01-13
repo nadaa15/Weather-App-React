@@ -61,7 +61,7 @@ export default function Navbar() {
 
   function handleSearch(term) {
    setcityError(false)
-   setsearchValue(term.trim());
+   setsearchValue(term);
    dispatch(getWeatherBySearch(term));
  }
 
