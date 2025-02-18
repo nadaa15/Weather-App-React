@@ -2,7 +2,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_KEY = "7dd73ad105804443935220008250401";
+const API_KEY = "32356d85553c4159b3135741251802";
 const initialState = {
   weather: null,
   loading: false,
